@@ -1,13 +1,13 @@
 %define oname	css_parser
 
 Name:		python-%{oname}
-Version:	1.0.6
+Version:	1.0.7
 Release:	1
 Summary:	Python module for parsing and building CSS 
 Group:		Development/Python
 License:	LGPLv3+
 URL:		https://pypi.org/project/css-parser
-Source0:	https://files.pythonhosted.org/packages/source/c/css-parser/css-parser-%{version}.tar.gz
+Source0:	https://files.pythonhosted.org/packages/ac/df/ed727cbb644de7d51f940bf669653347d5e68467e7a90d2c56bb86e489d9/css-parser-1.0.7.tar.gz
 BuildArch:	noarch 
 BuildRequires:	python-devel
 BuildRequires:	python-setuptools
