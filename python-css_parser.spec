@@ -1,50 +1,33 @@
-%define oname	css_parser
+%define oname css_parser
+%define module css-parser
 
 Name:		python-%{oname}
-Version:	1.0.7
-Release:	3
+Version:	1.0.10
+Release:	1
 Summary:	Python module for parsing and building CSS 
 Group:		Development/Python
-License:	LGPLv3+
+License:	LGPL-3.0-or-later
 URL:		https://pypi.org/project/css-parser
-Source0:	https://files.pythonhosted.org/packages/ac/df/ed727cbb644de7d51f940bf669653347d5e68467e7a90d2c56bb86e489d9/css-parser-1.0.7.tar.gz
+Source0:	https://files.pythonhosted.org/packages/source/c/%{module}/%{module}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+BuildSystem:	python
 BuildArch:	noarch 
-BuildRequires:	python-devel
-BuildRequires:	python-setuptools
-BuildRequires:	python2-devel
-BuildRequires:	python2-setuptools
-  
-%description 
-cssutils is a Python module for building and parsing CSS (Cascading
-Style Sheets).
- 
-%package -n python2-%{oname}
-Summary:	Python 2 module for parsing and building CSS 
-Group:		Development/Python
+BuildRequires:	pkgconfig(python3)
+BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
+BuildRequires:	python%{pyver}dist(wheel)
 
-%description -n python2-%{oname}
+%description
 cssutils is a Python module for building and parsing CSS (Cascading
 Style Sheets).
 
-%prep
-%autosetup -n css-parser-%{version}
-cp -a . %{py2dir}
+%prep -a
+# Remove bundled egg-info
+rm -rf src/%{oname}.egg-info
+# Fix interpreter
+find -name '*.py' | xargs sed -i '1s|^#!/usr/bin/env python|#!%{__python3}|'
+# Fix non-executable scripts
+sed -i "1d" src/css_parser/{parse,codec,sac,serialize,scripts/csscapture,_codec2,errorhandler,scripts/cssparse,_codec3,scripts/csscombine,tokenize2,version,encutils/__init__,__init__}.py
 
-%build 
-
-%install 
-pushd %{py2dir}
-python2 setup.py install --root=%{buildroot} --compile --optimize=2
-popd
-
-python setup.py install --root=%{buildroot} --compile --optimize=2
-
-%files  
+%files
 %{py_puresitedir}/%{oname}
 %{py_puresitedir}/%{oname}-%{version}-py%{py_ver}.egg-info
-# %{py_puresitedir}/tests/*py
-# %{py_puresitedir}/tests/test_encutils/*py
-
-%files -n python2-%{oname}
-%{py2_puresitedir}/%{oname}
-%{py2_puresitedir}/%{oname}-%{version}-py%{py2_ver}.egg-info
