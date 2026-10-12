@@ -3,7 +3,7 @@
 
 Name:		python-%{oname}
 Version:	1.0.10
-Release:	1
+Release:	2
 Summary:	Python module for parsing and building CSS 
 Group:		Development/Python
 License:	LGPL-3.0-or-later
